@@ -1,7 +1,6 @@
 package services
 
 import (
-	"log"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -60,9 +59,8 @@ func (s *TemperatureService) GetTemperature(location string) (*TemperatureRespon
 
 // GetTemperatureByID fetches temperature data for a specific sensor ID
 func (s *TemperatureService) GetTemperatureByID(sensorID string) (*TemperatureResponse, error) {
-	log.Printf("GetTemperatureByID")
 	url := fmt.Sprintf("%s/temperature/%s", s.BaseURL, sensorID)
-	log.Printf(url)
+
 	resp, err := s.HTTPClient.Get(url)
 	if err != nil {
 		return nil, fmt.Errorf("error fetching temperature data: %w", err)

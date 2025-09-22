@@ -3,17 +3,11 @@ FROM golang:1.22-alpine AS builder
 
 # Set working directory
 WORKDIR /app
-RUN apk --no-cache add ca-certificates
-RUN apk --no-cache add ca-certificates git && update-ca-certificates
+
 # Copy go.mod and go.sum files
 COPY go.mod go.sum ./
 
-RUN git config --global http.sslVerify false
-
-ENV GOPROXY=direct
-RUN git config --global http.sslVerify false
-ENV GOINSECURE=golang.org,x/crypto,google.golang.org,github.com,gopkg.in
-RUN go env -w GOPROXY=direct
+# Download dependencies
 RUN go mod download
 
 # Copy the source code

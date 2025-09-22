@@ -1,19 +1,19 @@
 @startuml C4_Component_AccessService
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
-Container(accessService, "Access Service", "Go", "Сервис контроля доступа")
+Container(accessService, "Access Service", "Go", "РЎРµСЂРІРёСЃ РєРѕРЅС‚СЂРѕР»СЏ РґРѕСЃС‚СѓРїР°")
 
-Component(accessApi, "Access API", "REST/gRPC", "Запросы авторизации и управления ролями")
-Component(policyEngine, "Access Control Engine", "Go", "Проверка прав доступа")
-Component(deviceAccess, "Device Access Manager", "Go", "Разграничение доступа к устройствам")
-Component(accessStore, "Access Data Store", "PostgreSQL/Redis", "Хранение данных о правах доступа")
-Component(authAdapter, "Auth Adapter", "Go", "Взаимодействие с сервисом аутентификации")
-Component(userAdapter, "User Adapter", "Go", "Взаимодействие с сервисом управления пользователями")
+Component(accessApi, "Access API", "REST/gRPC", "Р—Р°РїСЂРѕСЃС‹ Р°РІС‚РѕСЂРёР·Р°С†РёРё Рё СѓРїСЂР°РІР»РµРЅРёСЏ СЂРѕР»СЏРјРё")
+Component(policyEngine, "Access Control Engine", "Go", "РџСЂРѕРІРµСЂРєР° РїСЂР°РІ РґРѕСЃС‚СѓРїР°")
+Component(deviceAccess, "Device Access Manager", "Go", "Р Р°Р·РіСЂР°РЅРёС‡РµРЅРёРµ РґРѕСЃС‚СѓРїР° Рє СѓСЃС‚СЂРѕР№СЃС‚РІР°Рј")
+Component(accessStore, "Access Data Store", "PostgreSQL/Redis", "РҐСЂР°РЅРµРЅРёРµ РґР°РЅРЅС‹С… Рѕ РїСЂР°РІР°С… РґРѕСЃС‚СѓРїР°")
+Component(authAdapter, "Auth Adapter", "Go", "Р’Р·Р°РёРјРѕРґРµР№СЃС‚РІРёРµ СЃ СЃРµСЂРІРёСЃРѕРј Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёРё")
+Component(userAdapter, "User Adapter", "Go", "Р’Р·Р°РёРјРѕРґРµР№СЃС‚РІРёРµ СЃ СЃРµСЂРІРёСЃРѕРј СѓРїСЂР°РІР»РµРЅРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏРјРё")
 
-Rel(accessApi, policyEngine, "Запрос проверки доступа")
-Rel(policyEngine, deviceAccess, "Запрос прав на устройство")
-Rel(deviceAccess, accessStore, "Чтение/запись прав доступа")
-Rel(accessApi, authAdapter, "Проверка токена (userId)")
-Rel(accessApi, userAdapter, "Получение информации о пользователе")
+Rel(accessApi, policyEngine, "Р—Р°РїСЂРѕСЃ РїСЂРѕРІРµСЂРєРё РґРѕСЃС‚СѓРїР°")
+Rel(policyEngine, deviceAccess, "Р—Р°РїСЂРѕСЃ РїСЂР°РІ РЅР° СѓСЃС‚СЂРѕР№СЃС‚РІРѕ")
+Rel(deviceAccess, accessStore, "Р§С‚РµРЅРёРµ/Р·Р°РїРёСЃСЊ РїСЂР°РІ РґРѕСЃС‚СѓРїР°")
+Rel(accessApi, authAdapter, "РџСЂРѕРІРµСЂРєР° С‚РѕРєРµРЅР° (userId)")
+Rel(accessApi, userAdapter, "РџРѕР»СѓС‡РµРЅРёРµ РёРЅС„РѕСЂРјР°С†РёРё Рѕ РїРѕР»СЊР·РѕРІР°С‚РµР»Рµ")
 
 @enduml

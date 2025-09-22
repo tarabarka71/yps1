@@ -1,0 +1,61 @@
+asyncapi: 3.0.0
+info:
+  title: Telemetry Service
+  version: 1.0.0
+servers:
+  production:
+    host: 'broker:1883'
+    protocol: mqtt
+channels:
+  telemetry/data:
+    address: telemetry/data
+    messages:
+      subscribe.message:
+        payload:
+          type: object
+          properties:
+            deviceId:
+              type: string
+            timestamp:
+              type: string
+              format: date-time
+            metrics:
+              type: object
+              additionalProperties:
+                type: number
+  telemetry/alerts:
+    address: telemetry/alerts
+    messages:
+      subscribe.message:
+        payload:
+          type: object
+          properties:
+            deviceId:
+              type: string
+            type:
+              type: string
+              enum:
+                - overheat
+                - offline
+                - low_battery
+            severity:
+              type: string
+              enum:
+                - low
+                - medium
+                - high
+operations:
+  telemetry/data.subscribe:
+    action: send
+    channel:
+      $ref: '#/channels/telemetry~1data'
+    summary: Device telemetry received
+    messages:
+      - $ref: '#/channels/telemetry~1data/messages/subscribe.message'
+  telemetry/alerts.subscribe:
+    action: send
+    channel:
+      $ref: '#/channels/telemetry~1alerts'
+    summary: Alert from device
+    messages:
+      - $ref: '#/channels/telemetry~1alerts/messages/subscribe.message'

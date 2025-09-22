@@ -1,0 +1,25 @@
+@startuml C4_Component_BillingService
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+Container(billingService, "Billing Service", "Go", "Сервис биллинга: тарифы, расчёты, интеграция с платежными шлюзами")
+
+Component(billingApi, "Billing API", "REST", "Запросы тарифов, расчётов и оплаты")
+Component(tariffManager, "Tariff Manager", "Go", "Управление тарифами")
+Component(paymentCalculator, "Payment Calculator", "Go", "Расчёт платежей по тарифам")
+Component(invoiceManager, "Invoice Manager", "Go", "Формирование и учёт счетов")
+Component(paymentGateway, "Payment Gateway Adapter", "Go", "Интеграция с платёжными системами")
+Component(billingStore, "Billing Store", "PostgreSQL", "Хранение тарифов, транзакций, счетов")
+Component(userAdapter, "User Adapter", "Go", "Получение данных о пользователях")
+Component(accessAdapter, "Access Adapter", "Go", "Проверка доступа")
+
+Rel(billingApi, tariffManager, "Запрос тарифов")
+Rel(billingApi, paymentCalculator, "Расчёт стоимости")
+Rel(billingApi, invoiceManager, "Выставление счета")
+Rel(invoiceManager, billingStore, "Хранение счетов")
+Rel(tariffManager, billingStore, "Чтение/запись тарифов")
+Rel(paymentCalculator, tariffManager, "Получение тарифных правил")
+Rel(invoiceManager, paymentGateway, "Оплата счета")
+Rel(billingApi, userAdapter, "Запрос пользователя")
+Rel(billingApi, accessAdapter, "Проверка прав доступа")
+
+@enduml

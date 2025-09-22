@@ -1,0 +1,17 @@
+@startuml C4_Component_AuthService
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+Container(authService, "Auth Service", "Go", "Сервис аутентификации и управления токенами")
+
+Component(authApi, "Auth API", "REST", "Вход/выход пользователя")
+Component(tokenManager, "Token Manager", "Go", "Работа с аутентификационными данными")
+Component(credentialStore, "Credential Store", "PostgreSQL/Redis", "Хранение аутентификационными данных (хэши паролей и т.д.)")
+Component(userIntegration, "User Profile Adapter", "Go", "Запрос профиля пользователя в сервис управления ползователями")
+Component(accessAdapter, "Access Control Adapter", "Go", "Запрос прав доступа в сервис контроля доступа")
+
+Rel(authApi, tokenManager, "Генерация/валидация токенов")
+Rel(authApi, userIntegration, "Получение данных о пользователе")
+Rel(authApi, accessAdapter, "Получение прав")
+Rel(tokenManager, credentialStore, "Чтение/запись", "SQL/Redis")
+
+@enduml

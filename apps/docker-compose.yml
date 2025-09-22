@@ -1,13 +1,29 @@
-version: '3.8'
-
 services:
+  temperature-api:
+    build: .
+    container_name: temperature-api
+    ports:
+      - "8081:8081"
+    environment:
+      - FLASK_ENV=production
+    restart: unless-stopped
+    networks:
+      - smarthome-network
+
   postgres:
     image: postgres:16-alpine
     container_name: smarthome-postgres
-  ## тут нужно добавить настройки
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./smart_home/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - smarthome-network
 
-  temperature-api:
-  ## тут нужно добавить приложение
 
   app:
     build:
@@ -16,7 +32,7 @@ services:
     container_name: smarthome-app
     depends_on:
       postgres:
-        condition: service_healthy
+        condition: service_started
       temperature-api:
         condition: service_started
     environment:
@@ -29,6 +45,7 @@ services:
       - smarthome-network
 
 volumes:
+  smart_home_data:
   postgres_data:
 
 networks:

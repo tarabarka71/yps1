@@ -1,0 +1,41 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_TOP_DOWN()
+
+Person(user, "Пользователь", "Владелец дома")
+Person(device, "Устройство (датчик/реле)", "Отправляет телеметрию и принимает команды")
+
+System_Boundary(s1, "система теплый дом") {
+    Container(apiGateway, "API Gateway", "Маршрутизация API, аутентификация")
+    Container(deviceService, "Device Service",  "Реестр устройств")
+    Container(controlService, "Control Service", "Команды управления устройствами")
+    Container(gatewayService, "Gateway Service",  "Шлюз для взаимодействия с устройствами")
+    Container(telemetryService, "Telemetry Service",  "Обработка и хранение телеметрии")
+    Container(userService, "User Service", "Управление пользователями")
+    Container(authService, "Auth Service",  "Аутентификация и авторизация")
+    Container(billingService, "Billing Service",  "Тарифы, платежи")
+
+    ContainerDb(devicesDb, "Devices DB", "Хранение данных об устройствах")
+    ContainerDb(usersDb, "Users DB", "Хранение пользователей")
+    ContainerDb(telemetryDb, "Telemetry DB", "Хранение телеметрии")
+
+    Container(queue, "Event Bus", "Обмен событиями между сервисами")
+}
+
+Rel(user, apiGateway, "Использует")
+Rel(apiGateway, authService, "Проверяет токен")
+Rel(apiGateway, deviceService, "Добавление/удаление устройств")
+Rel(apiGateway, controlService, "Включение/отключение/настройка")
+Rel(apiGateway, telemetryService, "Передача данных (измерений, статистики)")
+Rel(apiGateway, billingService, "")
+Rel(device, gatewayService, "Отправка телеметрии / получение команд")
+
+Rel(gatewayService, queue, "Публикация событий телеметрии")
+Rel(telemetryService, queue, "Чтение телеметрии")
+Rel(controlService, queue, "Публикация команд")
+Rel(gatewayService, queue, "Чтение команд")
+Rel(deviceService, devicesDb, "")
+Rel(userService, usersDb, "Добавление/удаление пользователей")
+Rel(telemetryService, telemetryDb, "Хранение данных")
+@enduml

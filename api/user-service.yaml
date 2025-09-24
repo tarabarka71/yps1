@@ -10,12 +10,23 @@ paths:
       summary: List users
       responses:
         "200":
-          description: Users list
+          description: List of users
           content:
             application/json:
               schema:
                 type: array
                 items: { $ref: "#/components/schemas/User" }
+              examples:
+                sample:
+                  value:
+                    - id: "u1"
+                      email: email1@mail.xxx"
+                      name: "user1"
+                      createdAt: "2025-09-18T09:00:00Z"
+                    - id: "u2"
+                      email: email2@mail.xxx"
+                      name: "user2"
+                      createdAt: "2025-09-17T11:30:00Z"
     post:
       summary: Create user
       requestBody:
@@ -23,41 +34,48 @@ paths:
         content:
           application/json:
             schema: { $ref: "#/components/schemas/UserCreate" }
+            examples:
+              newUser:
+                value:
+                  email: email3@mail.xxx"
+                  name: "user3"
+                  password: "s3cr3t"
       responses:
         "201":
           description: User created
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/User" }
+              examples:
+                created:
+                  value:
+                    id: "u3"
+                    email: email1@mail.xxx"
+                    name: "user3"
+                    createdAt: "2025-09-18T12:00:00Z"
+
   /users/{id}:
     get:
       summary: Get user by ID
       parameters:
-        - in: path
-          name: id
+        - name: id
+          in: path
           required: true
           schema: { type: string }
       responses:
-        "200": { description: User object }
-    put:
-      summary: Update user
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema: { type: string }
-      requestBody:
-        content:
-          application/json:
-            schema: { $ref: "#/components/schemas/UserUpdate" }
-      responses:
-        "200": { description: User updated }
-    delete:
-      summary: Delete user
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema: { type: string }
-      responses:
-        "204": { description: Deleted }
+        "200":
+          description: User object
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/User" }
+              examples:
+                one:
+                  value:
+                    id: "u1"
+                    email: email4@mail.xxx"
+                    name: "user4"
+                    createdAt: "2025-09-18T09:00:00Z"
+
 components:
   schemas:
     User:
@@ -69,13 +87,8 @@ components:
         createdAt: { type: string, format: date-time }
     UserCreate:
       type: object
-      required: [email, name, password]
+      required: [email, password, name]
       properties:
         email: { type: string }
-        name: { type: string }
         password: { type: string }
-    UserUpdate:
-      type: object
-      properties:
         name: { type: string }
-        password: { type: string }

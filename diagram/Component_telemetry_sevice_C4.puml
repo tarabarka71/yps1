@@ -1,18 +1,18 @@
 @startuml C4_Component_TelemetryService
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
-Container(telemetryService, "Telemetry Service", "Go", "Микросервис для приёма, обработки и хранения данных телеметрии")
+Container(telemetryService, "Telemetry Service", "Go", "РњРёРєСЂРѕСЃРµСЂРІРёСЃ РґР»СЏ РїСЂРёС‘РјР°, РѕР±СЂР°Р±РѕС‚РєРё Рё С…СЂР°РЅРµРЅРёСЏ РґР°РЅРЅС‹С… С‚РµР»РµРјРµС‚СЂРёРё")
 
-Component(telemetryIngestion, "Telemetry Ingestion", "Kafka/RabbitMQ Consumer", "Подписка на очередь, получение данных от gateway-service")
-Component(dataProcessor, "Data Processor", "Go", "Валидация и обработка телеметрии, агрегации")
-Component(telemetryRepo, "Telemetry Repository", "TimescaleDB/InfluxDB", "Хранение данных телеметрии (временные ряды)")
-Component(telemetryApi, "Telemetry API", "REST/gRPC", "Предоставление данных другим сервисам и пользователям")
-Component(alertManager, "Alert Manager", "Go", "Уведомления при аномалиях (низкая температура, перегрузка и т.д.)")
+Component(telemetryIngestion, "Telemetry Ingestion", "Kafka/RabbitMQ Consumer", "РџРѕРґРїРёСЃРєР° РЅР° РѕС‡РµСЂРµРґСЊ, РїРѕР»СѓС‡РµРЅРёРµ РґР°РЅРЅС‹С… РѕС‚ gateway-service")
+Component(dataProcessor, "Data Processor", "Go", "Р’Р°Р»РёРґР°С†РёСЏ Рё РѕР±СЂР°Р±РѕС‚РєР° С‚РµР»РµРјРµС‚СЂРёРё, Р°РіСЂРµРіР°С†РёРё")
+Component(telemetryRepo, "Telemetry Repository", "TimescaleDB/InfluxDB", "РҐСЂР°РЅРµРЅРёРµ РґР°РЅРЅС‹С… С‚РµР»РµРјРµС‚СЂРёРё (РІСЂРµРјРµРЅРЅС‹Рµ СЂСЏРґС‹)")
+Component(telemetryApi, "Telemetry API", "REST/gRPC", "РџСЂРµРґРѕСЃС‚Р°РІР»РµРЅРёРµ РґР°РЅРЅС‹С… РґСЂСѓРіРёРј СЃРµСЂРІРёСЃР°Рј Рё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏРј")
+Component(alertManager, "Alert Manager", "Go", "РЈРІРµРґРѕРјР»РµРЅРёСЏ РїСЂРё Р°РЅРѕРјР°Р»РёСЏС… (РЅРёР·РєР°СЏ С‚РµРјРїРµСЂР°С‚СѓСЂР°, РїРµСЂРµРіСЂСѓР·РєР° Рё С‚.Рґ.)")
 
-Rel(telemetryIngestion, dataProcessor, "Передаёт данные")
-Rel(dataProcessor, telemetryRepo, "Сохраняет результаты")
-Rel(telemetryApi, telemetryRepo, "Читает данные", "SQL/TSDB API")
-Rel(dataProcessor, alertManager, "Генерирует события при аномалиях")
-Rel(telemetryIngestion, telemetryService, "Получает данные из", "Kafka/RabbitMQ")
+Rel(telemetryIngestion, dataProcessor, "РџРµСЂРµРґР°С‘С‚ РґР°РЅРЅС‹Рµ")
+Rel(dataProcessor, telemetryRepo, "РЎРѕС…СЂР°РЅСЏРµС‚ СЂРµР·СѓР»СЊС‚Р°С‚С‹")
+Rel(telemetryApi, telemetryRepo, "Р§РёС‚Р°РµС‚ РґР°РЅРЅС‹Рµ", "SQL/TSDB API")
+Rel(dataProcessor, alertManager, "Р“РµРЅРµСЂРёСЂСѓРµС‚ СЃРѕР±С‹С‚РёСЏ РїСЂРё Р°РЅРѕРјР°Р»РёСЏС…")
+Rel(telemetryIngestion, telemetryService, "РџРѕР»СѓС‡Р°РµС‚ РґР°РЅРЅС‹Рµ РёР·", "Kafka/RabbitMQ")
 
 @enduml

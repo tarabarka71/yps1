@@ -1,17 +1,17 @@
 @startuml C4_Component_AuthService
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
-Container(authService, "Auth Service", "Go", "Сервис аутентификации и управления токенами")
+Container(authService, "Auth Service", "Go", "РЎРµСЂРІРёСЃ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёРё Рё СѓРїСЂР°РІР»РµРЅРёСЏ С‚РѕРєРµРЅР°РјРё")
 
-Component(authApi, "Auth API", "REST", "Вход/выход пользователя")
-Component(tokenManager, "Token Manager", "Go", "Работа с аутентификационными данными")
-Component(credentialStore, "Credential Store", "PostgreSQL/Redis", "Хранение аутентификационными данных (хэши паролей и т.д.)")
-Component(userIntegration, "User Profile Adapter", "Go", "Запрос профиля пользователя в сервис управления ползователями")
-Component(accessAdapter, "Access Control Adapter", "Go", "Запрос прав доступа в сервис контроля доступа")
+Component(authApi, "Auth API", "REST", "Р’С…РѕРґ/РІС‹С…РѕРґ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ")
+Component(tokenManager, "Token Manager", "Go", "Р Р°Р±РѕС‚Р° СЃ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёРѕРЅРЅС‹РјРё РґР°РЅРЅС‹РјРё")
+Component(credentialStore, "Credential Store", "PostgreSQL/Redis", "РҐСЂР°РЅРµРЅРёРµ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёРѕРЅРЅС‹РјРё РґР°РЅРЅС‹С… (С…СЌС€Рё РїР°СЂРѕР»РµР№ Рё С‚.Рґ.)")
+Component(userIntegration, "User Profile Adapter", "Go", "Р—Р°РїСЂРѕСЃ РїСЂРѕС„РёР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РІ СЃРµСЂРІРёСЃ СѓРїСЂР°РІР»РµРЅРёСЏ РїРѕР»Р·РѕРІР°С‚РµР»СЏРјРё")
+Component(accessAdapter, "Access Control Adapter", "Go", "Р—Р°РїСЂРѕСЃ РїСЂР°РІ РґРѕСЃС‚СѓРїР° РІ СЃРµСЂРІРёСЃ РєРѕРЅС‚СЂРѕР»СЏ РґРѕСЃС‚СѓРїР°")
 
-Rel(authApi, tokenManager, "Генерация/валидация токенов")
-Rel(authApi, userIntegration, "Получение данных о пользователе")
-Rel(authApi, accessAdapter, "Получение прав")
-Rel(tokenManager, credentialStore, "Чтение/запись", "SQL/Redis")
+Rel(authApi, tokenManager, "Р“РµРЅРµСЂР°С†РёСЏ/РІР°Р»РёРґР°С†РёСЏ С‚РѕРєРµРЅРѕРІ")
+Rel(authApi, userIntegration, "РџРѕР»СѓС‡РµРЅРёРµ РґР°РЅРЅС‹С… Рѕ РїРѕР»СЊР·РѕРІР°С‚РµР»Рµ")
+Rel(authApi, accessAdapter, "РџРѕР»СѓС‡РµРЅРёРµ РїСЂР°РІ")
+Rel(tokenManager, credentialStore, "Р§С‚РµРЅРёРµ/Р·Р°РїРёСЃСЊ", "SQL/Redis")
 
 @enduml

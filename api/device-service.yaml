@@ -1,0 +1,213 @@
+openapi: 3.0.3
+info:
+  title: Device Service API
+  version: 1.0.0
+servers:
+  - url: http://device-service:8080/api/v1
+paths:
+  /devices:
+    get:
+      summary: List devices
+      responses:
+        "200":
+          description: List of devices
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Device" }
+              examples:
+                sample:
+                  value:
+                    - id: "device1"
+                      name: "Thermostat"
+                      typeId: "thermostat-1"
+                      location: "Living Room"
+                      serialNumber: "111111"
+                      status: "active"
+                      createdAt: "2025-09-18T10:00:00Z"
+                    - id: "device2"
+                      name: "Lock"
+                      typeId: "lock-1"
+                      location: "Garage"
+                      serialNumber: "22222"
+                      status: "inactive"
+                      createdAt: "2025-09-17T12:00:00Z"
+    post:
+      summary: Register new device
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/DeviceCreate" }
+            examples:
+              newDevice:
+                value:
+                  name: "Lamp"
+                  typeId: "lamp-1"
+                  serialNumber: "3333"
+                  location: "Bedroom"
+      responses:
+        "201":
+          description: Device created
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Device" }
+              examples:
+                created:
+                  value:
+                    id: "device3"
+                    name: "Lamp"
+                    typeId: "lamp-1"
+                    serialNumber: "3333"
+                    location: "Bedroom"
+                    status: "active"
+                    createdAt: "2025-09-18T11:00:00Z"
+
+  /devices/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: device id
+        schema:
+          type: integer
+    get:
+      summary: Get device by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Device object
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Device" }
+              examples:
+                device:
+                  value:
+                    id: "device1"
+                    name: "Thermostat"
+                    typeId: "thermostat-1"
+                    serialNumber: "11111"
+                    location: "Living Room"
+                    status: "active"
+                    createdAt: "2025-09-18T10:00:00Z"
+    put:
+      summary: Update device
+      requestBody:
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/DeviceUpdate" }
+            examples:
+              updateDevice:
+                value:
+                  name: "Thermostat"
+                  location: "Wall"
+                  status: "active"
+      responses:
+        "200":
+          description: Device updated
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Device" }
+              examples:
+                updated:
+                  value:
+                    id: "device1"
+                    name: "Thermostat"
+                    typeId: "thermostat1"
+                    serialNumber: "11111"
+                    location: "Wall"
+                    status: "active"
+                    createdAt: "2025-09-18T10:00:00Z"
+    delete:
+      summary: Remove device
+      responses:
+        "204": { description: Deleted }
+
+  /device-types:
+    get:
+      summary: List device types
+      responses:
+        "200":
+          description: List of device types
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/DeviceType" }
+              examples:
+                sample:
+                  value:
+                    - id: "thermostat1"
+                      name: "Thermostat"
+                      description: "Temperature control device"
+                    - id: "lamp1"
+                      name: "Lamp"
+                      description: "lamp"
+    post:
+      summary: Register new device type
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/DeviceTypeCreate" }
+            examples:
+              newType:
+                value:
+                  name: "Smart Lock"
+                  description: "Electronic lock with remote control"
+      responses:
+        "201":
+          description: Device type created
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/DeviceType" }
+              examples:
+                createdType:
+                  value:
+                    id: "lock-1"
+                    name: "Smart Lock"
+                    description: "Electronic lock with remote control"
+
+components:
+  schemas:
+    Device:
+      type: object
+      properties:
+        id: { type: string }
+        name: { type: string }
+        typeId: { type: string }
+        location: { type: string }
+        serialNumber: { type: string }
+        status: { type: string, enum: [active, inactive] }
+        createdAt: { type: string, format: date-time }
+    DeviceCreate:
+      type: object
+      required: [name, typeId, serialNumber]
+      properties:
+        name: { type: string }
+        typeId: { type: string }
+        serialNumber: { type: string }
+        location: { type: string }
+    DeviceUpdate:
+      type: object
+      properties:
+        name: { type: string }
+        location: { type: string }
+        status: { type: string }
+    DeviceType:
+      type: object
+      properties:
+        id: { type: string }
+        name: { type: string }
+        description: { type: string }
+    DeviceTypeCreate:
+      type: object
+      required: [name]
+      properties:
+        name: { type: string }
+        description: { type: string }

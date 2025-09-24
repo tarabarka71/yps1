@@ -1,18 +1,18 @@
 @startuml C4_Component_DeviceService
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
-Container(deviceService, "Device Control Service", "Go", "Микросервис для управления устройствами")
+Container(deviceService, "Device Control Service", "Go", "РњРёРєСЂРѕСЃРµСЂРІРёСЃ РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ СѓСЃС‚СЂРѕР№СЃС‚РІР°РјРё")
 
-Component(deviceApi, "Device API", "REST", "Принимает команды и запросы от пользователей/сервисов")
-Component(commandHandler, "Command Handler", "Go", "Обрабатывает команды, проверяет входные данные")
-Component(deviceManager, "Device Manager", "Go", "Бизнес-логика управления состоянием устройств")
-Component(deviceRepo, "Device Repository", "DAO/Postgres", "Хранение и получение данных об устройствах")
-Component(eventPublisher, "Event Publisher", "Kafka/RabbitMQ", "Публикует события о действиях с устройствами")
+Component(deviceApi, "Device API", "REST", "РџСЂРёРЅРёРјР°РµС‚ РєРѕРјР°РЅРґС‹ Рё Р·Р°РїСЂРѕСЃС‹ РѕС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№/СЃРµСЂРІРёСЃРѕРІ")
+Component(commandHandler, "Command Handler", "Go", "РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ РєРѕРјР°РЅРґС‹, РїСЂРѕРІРµСЂСЏРµС‚ РІС…РѕРґРЅС‹Рµ РґР°РЅРЅС‹Рµ")
+Component(deviceManager, "Device Manager", "Go", "Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР° СѓРїСЂР°РІР»РµРЅРёСЏ СЃРѕСЃС‚РѕСЏРЅРёРµРј СѓСЃС‚СЂРѕР№СЃС‚РІ")
+Component(deviceRepo, "Device Repository", "DAO/Postgres", "РҐСЂР°РЅРµРЅРёРµ Рё РїРѕР»СѓС‡РµРЅРёРµ РґР°РЅРЅС‹С… РѕР± СѓСЃС‚СЂРѕР№СЃС‚РІР°С…")
+Component(eventPublisher, "Event Publisher", "Kafka/RabbitMQ", "РџСѓР±Р»РёРєСѓРµС‚ СЃРѕР±С‹С‚РёСЏ Рѕ РґРµР№СЃС‚РІРёСЏС… СЃ СѓСЃС‚СЂРѕР№СЃС‚РІР°РјРё")
 
-Rel(deviceApi, commandHandler, "Передаёт команды")
-Rel(commandHandler, deviceManager, "Выполняет команду")
-Rel(deviceManager, deviceRepo, "id для устройств")
-Rel(deviceManager, eventPublisher, "Отправка событий")
+Rel(deviceApi, commandHandler, "РџРµСЂРµРґР°С‘С‚ РєРѕРјР°РЅРґС‹")
+Rel(commandHandler, deviceManager, "Р’С‹РїРѕР»РЅСЏРµС‚ РєРѕРјР°РЅРґСѓ")
+Rel(deviceManager, deviceRepo, "id РґР»СЏ СѓСЃС‚СЂРѕР№СЃС‚РІ")
+Rel(deviceManager, eventPublisher, "РћС‚РїСЂР°РІРєР° СЃРѕР±С‹С‚РёР№")
 
 
 @enduml

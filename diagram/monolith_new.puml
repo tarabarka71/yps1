@@ -1,14 +1,14 @@
 @startuml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/refs/heads/master/C4_Context.puml
 
-Person(user, "Клиент")
-Person(engineer, "Выездной специалист", "Подключает новые устройства")
-System(warmhouse, "Система «Теплый дом»")
-System_Ext(sensor, "Подключенное устройство")
+Person(user, "РљР»РёРµРЅС‚")
+Person(engineer, "Р’С‹РµР·РґРЅРѕР№ СЃРїРµС†РёР°Р»РёСЃС‚", "РџРѕРґРєР»СЋС‡Р°РµС‚ РЅРѕРІС‹Рµ СѓСЃС‚СЂРѕР№СЃС‚РІР°")
+System(warmhouse, "РЎРёСЃС‚РµРјР° В«РўРµРїР»С‹Р№ РґРѕРјВ»")
+System_Ext(sensor, "РџРѕРґРєР»СЋС‡РµРЅРЅРѕРµ СѓСЃС‚СЂРѕР№СЃС‚РІРѕ")
 
-Rel(user, warmhouse, "Просматривает и управляет устройствами")
-Rel(warmhouse, sensor, "Посылает команды и запрашивает состояние")
-Rel(engineer, sensor, "Регистрирует в системе")
-Rel(engineer, warmhouse, "Подключает новое устройство")
+Rel(user, warmhouse, "РџСЂРѕСЃРјР°С‚СЂРёРІР°РµС‚ Рё СѓРїСЂР°РІР»СЏРµС‚ СѓСЃС‚СЂРѕР№СЃС‚РІР°РјРё")
+Rel(warmhouse, sensor, "РџРѕСЃС‹Р»Р°РµС‚ РєРѕРјР°РЅРґС‹ Рё Р·Р°РїСЂР°С€РёРІР°РµС‚ СЃРѕСЃС‚РѕСЏРЅРёРµ")
+Rel(engineer, sensor, "Р РµРіРёСЃС‚СЂРёСЂСѓРµС‚ РІ СЃРёСЃС‚РµРјРµ")
+Rel(engineer, warmhouse, "РџРѕРґРєР»СЋС‡Р°РµС‚ РЅРѕРІРѕРµ СѓСЃС‚СЂРѕР№СЃС‚РІРѕ")
 
 @enduml

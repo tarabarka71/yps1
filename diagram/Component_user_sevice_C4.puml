@@ -1,13 +1,13 @@
 @startuml C4_Component_UserService
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
-Container(userService, "User Service", "Go", "Микросервис для управления пользователями")
+Container(userService, "User Service", "Go", "РњРёРєСЂРѕСЃРµСЂРІРёСЃ РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏРјРё")
 
-Component(userApi, "User API", "REST", "операции с пользователями")
-Component(userManager, "User Manager", "Go", "Создание, обновление, удаление пользователей")
-Component(userDB, "User DB", "PostgreSQL", "Хранение данных пользователей")
+Component(userApi, "User API", "REST", "РѕРїРµСЂР°С†РёРё СЃ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏРјРё")
+Component(userManager, "User Manager", "Go", "РЎРѕР·РґР°РЅРёРµ, РѕР±РЅРѕРІР»РµРЅРёРµ, СѓРґР°Р»РµРЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№")
+Component(userDB, "User DB", "PostgreSQL", "РҐСЂР°РЅРµРЅРёРµ РґР°РЅРЅС‹С… РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№")
 
-Rel(userApi, userManager, "Обрабатывает запросы")
-Rel(userManager, userDB, "Чтение/запись", "SQL")
+Rel(userApi, userManager, "РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ Р·Р°РїСЂРѕСЃС‹")
+Rel(userManager, userDB, "Р§С‚РµРЅРёРµ/Р·Р°РїРёСЃСЊ", "SQL")
 
 @enduml

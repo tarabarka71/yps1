@@ -1,0 +1,13 @@
+@startuml C4_Component_UserService
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+Container(userService, "User Service", "Go", "Микросервис для управления пользователями")
+
+Component(userApi, "User API", "REST", "операции с пользователями")
+Component(userManager, "User Manager", "Go", "Создание, обновление, удаление пользователей")
+Component(userDB, "User DB", "PostgreSQL", "Хранение данных пользователей")
+
+Rel(userApi, userManager, "Обрабатывает запросы")
+Rel(userManager, userDB, "Чтение/запись", "SQL")
+
+@enduml

@@ -1,0 +1,15 @@
+@startuml C4_Component_DeviceService
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+Container(deviceService, "Device Registry Service", "Go")
+
+Component(api, "Device Registry API", "", "Обрабатывает запросы от пользователей и других сервисов")
+Component(deviceManager, "Device Manager", "", "Добавляет/удаляет устройства")
+Component(repo, "Device Repository", "", "Работает с базой данных устройств")
+Component(eventPublisher, "Event Publisher", "", "Публикует события о действиях с устройствами")
+
+Rel(api, deviceManager, "Передаёт команды добавления/удаления")
+Rel(deviceManager, repo, "Чтение/сохранение устройств")
+Rel(deviceManager, eventPublisher, "Генерирует события")
+
+@enduml

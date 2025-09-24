@@ -1,0 +1,71 @@
+@startuml ER_Diagram
+!define table(x) class x << (T,#FFAAAA) >>
+
+table(User) {
+  id PK
+  email
+  password_hash
+  name
+  timestamp
+}
+
+table(House) {
+  id PK
+  user_id FK
+  address
+  name
+  timestamp
+}
+
+table(DeviceType) {
+  id PK
+  name
+  description
+}
+
+table(Device) {
+  id PK
+  house_id FK
+  type_id FK
+  serial_number
+  status
+}
+
+table(Module) {
+  id PK
+  house_id FK
+  name
+  description
+}
+
+table(TelemetryData) {
+  id PK
+  device_id FK
+  timestamp
+  value
+}
+
+table(AccessControl) {
+  id PK
+  user_id FK
+  device_id FK
+  permission
+}
+
+table(Invoice) {
+  id PK
+  user_id FK
+  amount
+  currency
+  status
+  timestamp
+}
+
+User "1" -- "N" House
+House "1" -- "N" Device
+DeviceType "1" -- "N" Device
+Device "1" -- "N" TelemetryData
+House "1" -- "N" Module
+User "1" -- "N" Invoice
+User "N" -- "M" Device : AccessControl
+@enduml

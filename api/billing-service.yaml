@@ -1,0 +1,54 @@
+openapi: 3.0.3
+info:
+  title: Billing Service API
+  version: 1.0.0
+servers:
+  - url: http://billing-service:8080/api/v1
+paths:
+  /tariffs:
+    get:
+      summary: List tariffs
+      responses:
+        "200": { description: Tariffs list }
+    post:
+      summary: Create tariff
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, price]
+              properties:
+                name: { type: string }
+                price: { type: number }
+      responses:
+        "201": { description: Tariff created }
+  /users/{id}/invoices:
+    get:
+      summary: List invoices for user
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        "200": { description: Invoices list }
+  /users/{id}/pay:
+    post:
+      summary: Pay invoice
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [invoiceId, paymentMethod]
+              properties:
+                invoiceId: { type: string }
+                paymentMethod: { type: string }
+      responses:
+        "200": { description: Payment successful }

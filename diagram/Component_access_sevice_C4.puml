@@ -1,0 +1,19 @@
+@startuml C4_Component_AccessService
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+Container(accessService, "Access Service", "Go", "Сервис контроля доступа")
+
+Component(accessApi, "Access API", "REST/gRPC", "Запросы авторизации и управления ролями")
+Component(policyEngine, "Access Control Engine", "Go", "Проверка прав доступа")
+Component(deviceAccess, "Device Access Manager", "Go", "Разграничение доступа к устройствам")
+Component(accessStore, "Access Data Store", "PostgreSQL/Redis", "Хранение данных о правах доступа")
+Component(authAdapter, "Auth Adapter", "Go", "Взаимодействие с сервисом аутентификации")
+Component(userAdapter, "User Adapter", "Go", "Взаимодействие с сервисом управления пользователями")
+
+Rel(accessApi, policyEngine, "Запрос проверки доступа")
+Rel(policyEngine, deviceAccess, "Запрос прав на устройство")
+Rel(deviceAccess, accessStore, "Чтение/запись прав доступа")
+Rel(accessApi, authAdapter, "Проверка токена (userId)")
+Rel(accessApi, userAdapter, "Получение информации о пользователе")
+
+@enduml

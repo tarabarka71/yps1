@@ -1,0 +1,94 @@
+openapi: 3.0.3
+info:
+  title: User Service API
+  version: 1.0.0
+servers:
+  - url: http://user-service:8080/api/v1
+paths:
+  /users:
+    get:
+      summary: List users
+      responses:
+        "200":
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/User" }
+              examples:
+                sample:
+                  value:
+                    - id: "u1"
+                      email: email1@mail.xxx"
+                      name: "user1"
+                      createdAt: "2025-09-18T09:00:00Z"
+                    - id: "u2"
+                      email: email2@mail.xxx"
+                      name: "user2"
+                      createdAt: "2025-09-17T11:30:00Z"
+    post:
+      summary: Create user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/UserCreate" }
+            examples:
+              newUser:
+                value:
+                  email: email3@mail.xxx"
+                  name: "user3"
+                  password: "s3cr3t"
+      responses:
+        "201":
+          description: User created
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/User" }
+              examples:
+                created:
+                  value:
+                    id: "u3"
+                    email: email1@mail.xxx"
+                    name: "user3"
+                    createdAt: "2025-09-18T12:00:00Z"
+
+  /users/{id}:
+    get:
+      summary: Get user by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: User object
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/User" }
+              examples:
+                one:
+                  value:
+                    id: "u1"
+                    email: email4@mail.xxx"
+                    name: "user4"
+                    createdAt: "2025-09-18T09:00:00Z"
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id: { type: string }
+        email: { type: string }
+        name: { type: string }
+        createdAt: { type: string, format: date-time }
+    UserCreate:
+      type: object
+      required: [email, password, name]
+      properties:
+        email: { type: string }
+        password: { type: string }
+        name: { type: string }
